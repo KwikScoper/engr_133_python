@@ -125,8 +125,6 @@ def main():
         
         fig, axes = plt.subplots(1, 2, figsize=(10, 5)) # 1 row, 2 columns
 
-        print(img_array)
-
         if img_array.ndim == 2:
             axes[0].imshow(img_array, cmap='gray')
             axes[1].hist(img_array.flatten(), bins=256, color='gray', alpha=0.5)
@@ -134,10 +132,13 @@ def main():
             
         else:
             axes[0].imshow(img_array)
-            axes[1].hist(reds.flatten(), bins=256, color='red', alpha=0.5)
-            axes[1].hist(greens.flatten(), bins=256, color='green', alpha=0.5)
-            axes[1].hist(blues.flatten(), bins=256, color='blue', alpha=0.5)
+            axes[1].hist((reds*255).flatten(), bins=256, color='red', alpha=0.5)
+            axes[1].hist((greens*255).flatten(), bins=256, color='green', alpha=0.5)
+            axes[1].hist((blues*255).flatten(), bins=256, color='blue', alpha=0.5)
             axes[1].set_title('RGB Intensity Histogram')
+
+        axes[0].set_title('Linearized Image')
+        axes[0].axis('off')
         
         axes[1].set_xlabel('Pixel Value (0-255)')
         axes[1].set_ylabel('Quantity')
